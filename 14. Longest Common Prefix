@@ -1,0 +1,32 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#include <math.h>
+#include <limits.h>
+#include <ctype.h>
+#include <stdbool.h>
+char* longestCommonPrefix(char** strs, int strsSize) {
+    if(strsSize==0){
+        return "";
+    }
+   /// char* prefix = strs[0];/// Segmentation fault函數中的 prefix 指標指向了 strs[0] 所指向的內存位置，而在後續的處理中，又將prefix[j] 設置為 '\0'，這樣做會修改 strs[0] 所指向的字元串。當你嘗試訪問這個已經修改的字元串時，就會出現段錯誤。
+    char* prefix = (char*)malloc(strlen(strs[0]) + 1);///建一個新內存
+    strcpy(prefix, strs[0]);
+    for(int i=1;i<strsSize;i++){
+        int j=0;
+        while(strs[i][j]!='\0' && prefix[j]!='\0' && prefix[j]==strs[i][j]){
+            j++;
+        }
+        prefix[j]='\0';
+    }
+    return prefix;
+}
+int main() {
+    printf("flower flow flight");
+    char* strs[3] = {"flower","flow","flight"};
+    printf("flower flow flight");
+    char* ans = longestCommonPrefix(strs,3);
+    // 輸出結果
+    printf("ans = %s",ans);
+    return 0;
+}

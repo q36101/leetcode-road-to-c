@@ -1,0 +1,41 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#include <math.h>
+char * longestPalindrome(char * s){
+    int len=strlen(s);
+    if(len<=1) return s;
+
+    int start=0,maxLen=1,i,j,left,right;
+    for(i=0;i<len;i++){
+        left=i-1;
+        right=i+1;
+        while(right<len && s[right]==s[i]) right++;
+        while(left>=0 && right<len && s[right]==s[left]){
+            left--;
+            right++;
+
+        }
+        if(right-left-1>maxLen){
+            maxLen=right-left-1;
+            start=left+1;
+        }
+    }
+
+    char* res = (char*)malloc((maxLen + 1) * sizeof(char));
+    for(i=0,j=start ; i<maxLen ; i++,j++){
+        res[i]=s[j];
+    }
+    res[maxLen] = '\0';
+    return res;
+}
+int main() {
+
+    char* s = "babad";
+    char* ans = longestPalindrome(s);
+    // 輸出結果
+    
+    printf("ans = %s",ans);
+
+    return 0;
+}

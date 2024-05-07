@@ -1,0 +1,31 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#include <math.h>
+int lengthOfLongestSubstring(char * s){
+    int map[128]={0};
+    int result=0;
+    int len = strlen(s);
+    int left = 0;
+
+    for(int i=0;i<len;i++){
+        map[s[i]]++;
+        while(map[s[i]]>1){
+            map[s[left]]--;
+            left++;
+        }
+        result = fmax(result,i-left+1);
+    }
+    return result;
+
+}
+
+int main() {
+
+    char* s = "abcabcbb";
+    int ans = lengthOfLongestSubstring(s);
+    // 輸出結果
+    printf("ans = %d",ans);
+
+    return 0;
+}

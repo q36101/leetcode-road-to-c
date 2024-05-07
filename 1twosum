@@ -1,0 +1,38 @@
+/******************************************************************************
+
+                            Online C Compiler.
+                Code, Compile, Run and Debug C program online.
+Write your code in this editor and press "Run" button to compile and execute it.
+
+*******************************************************************************/
+
+#include <stdio.h>
+#include <stdlib.h>
+int* twoSum(int* nums, int numsSize, int target, int* returnSize) {
+
+    *returnSize = 2;
+
+    int* result = (int*)malloc(sizeof(int)*2);
+
+    for(int i=0;i<numsSize-1;i++){
+        for(int j=i+1;j<numsSize;j++){
+            if(nums[i]+nums[j]==target){
+                result[0]=i;
+                result[1]=j;
+                return result;
+            }
+        }
+    }
+    return result;
+}
+int main()
+{   
+    int nums[4] = {2,7,11,15};
+    int target = 9;
+    int returnSize;
+    int* ans =  twoSum(nums,4,target,&returnSize);
+    
+    printf("ans =[%d,%d] ",ans[0],ans[1]);
+
+    return 0;
+}

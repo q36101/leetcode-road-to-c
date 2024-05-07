@@ -1,0 +1,39 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#include <math.h>
+#include <limits.h>
+#include <ctype.h>
+int myAtoi(char *s) {
+    int len = strlen(s);
+    int result = 0;
+    int k = 0;
+    while(k<len && isspace(s[k])){
+        k++;
+    }
+    int sign = 1;
+    if(k<len && (s[k] == '+' || s[k] == '-')){
+        if(s[k] == '-'){
+            sign = -1;
+        }
+        k++;
+    }
+    while(k<len && isdigit(s[k])){
+        if(  (result>INT_MAX/10) || (result== INT_MAX/10 && (s[k]-'0')>INT_MAX%10) ){
+            return (sign==1)?INT_MAX:INT_MIN;
+        }
+        result = result*10 + (s[k]-'0');
+        k++;
+    }
+    return sign * result;
+}
+int main() {
+
+    char* s = "42";
+    int ans = myAtoi(s);
+    // 輸出結果
+    
+    printf("ans = %d",ans);
+
+    return 0;
+}

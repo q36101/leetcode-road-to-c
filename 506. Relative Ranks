@@ -1,0 +1,54 @@
+// Online C compiler to run C program online
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+typedef struct{
+    int score;
+    int index;
+}Athlete;
+int compare(const void* a,const void* b){
+    return ((Athlete*)b)->score - ((Athlete*)a)->score;
+}
+char** findRelativeRanks(int* score ,int scoresize){
+    
+    Athlete* athlete = (Athlete*)malloc(sizeof(Athlete)*scoresize);
+    
+    for(int i=0;i<scoresize;i++){
+        athlete[i].score = score[i];
+        athlete[i].index = i;
+    }
+    qsort(athlete,scoresize,sizeof(athlete),compare);
+    
+    char** result = (char**)malloc(sizeof(char*)*scoresize);
+    for(int i=0;i<scoresize;i++){
+        result[athlete[i].index] = (char*)malloc(sizeof(char)*20);
+    }
+    for(int i=0;i<scoresize;i++){
+        if(i==0){
+            strcpy(result[athlete[i].index],"Gold Medal");
+        }else if(i==1){
+            strcpy(result[athlete[i].index],"Silver Medal");
+        }else if(i==2){
+            strcpy(result[athlete[i].index],"Bronze Medal");
+        }else{
+            sprintf(result[athlete[i].index],"%d",i+1);
+        }
+    }
+    free(athlete);
+    return result;
+    
+}
+int main() {
+    // Write C code here
+    int scores[] = {3,4,5,2,1};
+    int scoresSize = sizeof(scores) / sizeof(scores[0]);
+    
+    char** ranks = findRelativeRanks(scores ,scoresSize);
+    for (int i = 0; i < scoresSize; i++) {
+        printf("%s\n", ranks[i]);
+        free(ranks[i]); // 釋放每個字符串的內存
+    }
+    free(ranks); // 釋放指針數組的內存
+
+    return 0;
+}
